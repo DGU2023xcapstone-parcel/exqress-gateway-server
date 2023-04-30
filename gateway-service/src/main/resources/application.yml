@@ -27,3 +27,8 @@ spring:
             - Path=/user-service/**
           filters:
             - CustomFilter
+            - name: LoggingFilter
+              args:
+                baseMessage: Logging Message
+                preLogger: true
+                postLogger: true
