@@ -27,10 +27,6 @@ spring:
             preLogger: true
             postLogger: true
       routes:
-#        - id: user-service
-#          uri: lb://USER-SERVICE
-#          predicates:
-#            - Path=/user-service/**
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
@@ -68,21 +64,35 @@ spring:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
 
+        - id: delivery-service
+          uri: lb://DELIVERY-SERVICE
+          predicates:
+            - Path=/delivery-service/actuator/**
+            - Method=GET, POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/delivery-service/(?<segment>.*), /$\{segment}
+
 
         - id: delivery-service
           uri: lb://DELIVERY-SERVICE
           predicates:
             - Path=/delivery-service/**
+            - Method=GET, POST
           filters:
-            - CustomFilter
-            - name: LoggingFilter
-              args:
-                baseMessage: Logging Message
-                preLogger: true
-                postLogger: true
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/delivery-service/(?<segment>.*), /$\{segment}
 
-#token:
-#  secret: exqress-token
+
+
+        - id: delivery-service
+          uri: lb://DELIVERY-SERVICE
+          predicates:
+            - Path=/delivery-service/welcome
+            - Method=GET
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/delivery-service/(?<segment>.*), /$\{segment}
 
 management:
   endpoints:
