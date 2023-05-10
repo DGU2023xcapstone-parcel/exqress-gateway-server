@@ -30,7 +30,7 @@ spring:
         - id: user-service
           uri: http://af79ff7f7b96b4ceda2a71261c923a20-567584026.ap-northeast-2.elb.amazonaws.com/
           predicates:
-            - Path=/user-service/login
+            - Path=/user-service/user/login
             - Method=POST
           filters:
             - RemoveRequestHeader=Cookie
@@ -84,7 +84,7 @@ spring:
 
 
         - id: delivery-service
-          uri: lb://DELIVERY-SERVICE
+          uri: http://ae9066c09904745a49fe7915b4a783cd-432689282.ap-northeast-2.elb.amazonaws.com/
           predicates:
             - Path=/delivery-service/**
             - Method=GET, POST
