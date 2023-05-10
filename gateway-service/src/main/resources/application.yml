@@ -28,7 +28,7 @@ spring:
             postLogger: true
       routes:
         - id: user-service
-          uri: lb://USER-SERVICE
+          uri: http://af79ff7f7b96b4ceda2a71261c923a20-567584026.ap-northeast-2.elb.amazonaws.com/
           predicates:
             - Path=/user-service/login
             - Method=POST
@@ -37,7 +37,7 @@ spring:
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
 
         - id: user-service
-          uri: lb://USER-SERVICE
+          uri: http://af79ff7f7b96b4ceda2a71261c923a20-567584026.ap-northeast-2.elb.amazonaws.com/
           predicates:
             - Path=/user-service/users
             - Method=POST
@@ -45,15 +45,15 @@ spring:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
 
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/user-service/**
-            - Method=GET
-          filters:
-            - AuthenticationHeaderFilter
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+#        - id: user-service
+#          uri: lb://USER-SERVICE
+#          predicates:
+#            - Path=/user-service/**
+#            - Method=GET
+#          filters:
+#            - AuthenticationHeaderFilter
+#            - RemoveRequestHeader=Cookie
+#            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
 
         - id: user-service
           uri: lb://USER-SERVICE
@@ -65,12 +65,13 @@ spring:
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
 
         - id: user-service
-          uri: http://af79ff7f7b96b4ceda2a71261c923a20-567584026.ap-northeast-2.elb.amazonaws.com
+          uri: http://af79ff7f7b96b4ceda2a71261c923a20-567584026.ap-northeast-2.elb.amazonaws.com/
           predicates:
             - Path=/user-service/**
             - Method= GET
           filters:
             - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
 
         - id: delivery-service
           uri: lb://DELIVERY-SERVICE
